@@ -1,0 +1,1 @@
+docker-compose -p el2 up -d
