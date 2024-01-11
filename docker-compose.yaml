@@ -15,6 +15,8 @@ services:
       - http.cors.allow-credentials=true
     ports:
       - 9200:9200
+    networks:
+      - elastic
     ulimits:
       memlock:
         soft: -1
@@ -22,3 +24,22 @@ services:
       nofile:
         soft: 65536
         hard: 65536
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.3
+    container_name: kibana
+    environment:
+      XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY: d1a66dfd-c4d3-4a0a-8290-2abcb83ab3aa
+    ports:
+      - 5601:5601
+    networks:
+      - elastic
+    deploy:    
+      resources:
+          limits:
+            cpus: '2.0'
+          reservations:
+            cpus: '1.0'
+
+networks:
+  elastic:
